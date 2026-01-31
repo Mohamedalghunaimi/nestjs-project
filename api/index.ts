@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../dist/app.module';
+import { AppModule } from '../src/app.module.js';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express from 'express';
 
