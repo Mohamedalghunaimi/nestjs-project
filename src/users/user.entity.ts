@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 
 import { Exclude } from "class-transformer";
-import { ProductEntity } from "src/products/product.entity";
-import { Review } from "src/reviews/reviews.entity";
-import { UserType } from "src/utilts/enum";
+import { ProductEntity } from "../products/product.entity";
+import { Review } from "../reviews/reviews.entity";
+import { UserType } from "../utilts/enum";
 import { Column, Entity, OneToMany,  PrimaryGeneratedColumn } from "typeorm";
 
 

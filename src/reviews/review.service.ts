@@ -3,12 +3,12 @@ import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Review } from "./reviews.entity";
 import { Repository } from "typeorm";
-import { ProductService } from "src/products/product.service";
-import { UserServices } from "src/users/user.service";
+import { ProductService } from "../products/product.service";
+import { UserServices } from "../users/user.service";
 import { CreateReviewDto } from "./dto/createReview.dto";
 import { UpdateReviewDto } from "./dto/updateReview.dto";
-import { UserType } from "src/utilts/enum";
-import { PayloadType } from "src/users/types/types";
+import { UserType } from "../utilts/enum";
+import { PayloadType } from "../users/types/types";
 
 @Injectable() 
 export class ReviewService {

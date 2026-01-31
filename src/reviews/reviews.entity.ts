@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { ProductEntity } from 'src/products/product.entity';
-import { User } from 'src/users/user.entity';
+import { ProductEntity } from '../products/product.entity';
+import { User } from '../users/user.entity';
 import { Column, Entity, ManyToOne,  PrimaryGeneratedColumn } from 'typeorm';
 
 const defaultFn = () => {

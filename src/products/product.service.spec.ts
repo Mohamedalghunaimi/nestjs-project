@@ -10,7 +10,7 @@
 /* eslint-disable prettier/prettier */
 import { Test, TestingModule } from "@nestjs/testing"
 import { ProductService } from "./product.service"
-import { UserServices } from "src/users/user.service";
+import { UserServices } from "../users/user.service";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { ProductEntity } from "./product.entity";
 import { Repository } from "typeorm";

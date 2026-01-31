@@ -6,7 +6,7 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { UserServices } from "./user.service"
 import { JwtService } from "@nestjs/jwt";
-import { MailService } from "src/mail/mail.service";
+import { MailService } from "../mail/mail.service";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 import { User } from "./user.entity";

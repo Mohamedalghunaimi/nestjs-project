@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import { Review } from "src/reviews/reviews.entity"
-import { User } from "src/users/user.entity"
+import { Review } from "../reviews/reviews.entity"
+import { User } from "../users/user.entity"
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, ManyToOne } from "typeorm"
 const defaultFn = () => {
     return "CURRENT_TIMESTAMP"

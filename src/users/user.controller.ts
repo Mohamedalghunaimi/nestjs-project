@@ -11,7 +11,7 @@ import { AuthGuard } from "./guards/authGuard";
 import { currentUserDecorator } from "./decorators/currentUser.decorator";
 import { User } from "./user.entity";
 import { Roles } from "./decorators/roles.decorator";
-import { UserType } from "src/utilts/enum";
+import { UserType } from "../utilts/enum";
 import { RolesGurad } from "./guards/RolesGuard";
 import { UpdateUserDto } from "./dto/UpdateUser.dto";
 import { FileInterceptor } from "@nestjs/platform-express";

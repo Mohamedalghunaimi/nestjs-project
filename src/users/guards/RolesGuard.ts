@@ -12,7 +12,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { UserType } from 'src/utilts/enum';
+import { UserType } from '../../utilts/enum';
 import { Request } from 'express';
 import { PayloadType } from '../types/types';
 

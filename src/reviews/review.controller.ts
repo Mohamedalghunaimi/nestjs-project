@@ -2,11 +2,11 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ReviewService } from './review.service';
-import { RolesGurad } from 'src/users/guards/RolesGuard';
-import { Roles } from 'src/users/decorators/roles.decorator';
-import { UserType } from 'src/utilts/enum';
-import { PayloadType } from 'src/users/types/types';
-import { currentUserDecorator } from 'src/users/decorators/currentUser.decorator';
+import { RolesGurad } from '../users/guards/RolesGuard';
+import { Roles } from '../users/decorators/roles.decorator';
+import { UserType } from '../utilts/enum';
+import { PayloadType } from '../users/types/types';
+import { currentUserDecorator } from '../users/decorators/currentUser.decorator';
 import { CreateReviewDto } from './dto/createReview.dto';
 import { Review } from './reviews.entity';
 import { UpdateReviewDto } from './dto/updateReview.dto';

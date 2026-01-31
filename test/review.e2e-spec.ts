@@ -6,10 +6,10 @@
 
 import { INestApplication } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
-import { AppModule } from "src/app.module";
-import { ProductEntity } from "src/products/product.entity";
-import { Review } from "src/reviews/reviews.entity";
-import { User } from "src/users/user.entity";
+import { AppModule } from "../src/app.module";
+import { ProductEntity } from "../src/products/product.entity";
+import { Review } from "../src/reviews/reviews.entity";
+import { User } from "../src/users/user.entity";
 import { App } from "supertest/types";
 import { DataSource } from "typeorm";
 import request from 'supertest';

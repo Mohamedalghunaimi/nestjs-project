@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { UserType } from 'src/utilts/enum';
+import { UserType } from '../../utilts/enum';
 
 export type PayloadType = {
   email: string;

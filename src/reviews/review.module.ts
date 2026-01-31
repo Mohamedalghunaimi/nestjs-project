@@ -4,8 +4,8 @@ import { ReviewController } from './review.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Review } from './reviews.entity';
 import { ReviewService } from './review.service';
-import { ProductModule } from 'src/products/product.module';
-import { UserModule } from 'src/users/user.module';
+import { ProductModule } from '../products/product.module';
+import { UserModule } from '../users/user.module';
 
 @Module({
   controllers: [ReviewController],
