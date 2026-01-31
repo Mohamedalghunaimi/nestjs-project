@@ -11,6 +11,7 @@ import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { UploadModule } from './uploads/upload.module';
 import { MailModule } from './mail/mail.module';
 import { dataSourceOptions } from '../db/dataSoure';
+import { AppController } from './app.controller';
 
 @Module({
     imports: [
@@ -22,7 +23,7 @@ import { dataSourceOptions } from '../db/dataSoure';
         TypeOrmModule.forRoot(dataSourceOptions),
         ConfigModule.forRoot({
             isGlobal :true,
-            envFilePath:  `.env.${process.env.NODE_ENV}`
+            envFilePath: process.env.NODE_ENV!=="production" ? `.env.${process.env.NODE_ENV}`:'.env'
         }),
     ],
     providers :[
@@ -37,7 +38,8 @@ import { dataSourceOptions } from '../db/dataSoure';
                 forbidNonWhitelisted: true
             })
         }
-    ]
+    ],
+    controllers:[AppController]
 
 })
 export class AppModule {}
