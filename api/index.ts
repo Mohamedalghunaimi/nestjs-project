@@ -12,7 +12,6 @@ const server = express();
 export default async function handler(req:Request, res:Response) {
   try {
     const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
-    app.setGlobalPrefix('api'); // أي route هيبقى /api/...
     await app.init();
     return server(req, res);
   } catch (err) {
