@@ -42,7 +42,8 @@ describe("controller",() => {
         const module:TestingModule = await Test.createTestingModule({
             controllers:[ProductController],
             providers:[
-                {provide:ProductService,useValue:{
+                {
+                    provide:ProductService,useValue:{
                     createNewProduct :jest.fn((dto:CreateProductDto,id:number)=> {
                         return Promise.resolve({...dto,id})
 
