@@ -57,7 +57,7 @@ export class UserController {
 
     @Get("/currentUser")
     @UseGuards(AuthGuard)
-        @ApiSecurity("bearer")
+    @ApiSecurity("bearer")
 
     public async getCurrentUser ( @currentUserDecorator() payload:PayloadType) {
 
@@ -107,15 +107,13 @@ export class UserController {
 
     @Post("upload-image")
     @UseGuards(AuthGuard)
-        @ApiSecurity("bearer")
-
-    @UseInterceptors(
-        FileInterceptor('file'))
+    @ApiSecurity("bearer")
+    @UseInterceptors(FileInterceptor('file'))
     public async uploadImage(@UploadedFile() file: Express.Multer.File,@currentUserDecorator() user:PayloadType ) {
         if(!file) {
             throw new BadRequestException("invalid file!")
         }
-        const savedUser = await this.userServices.setProfileImage(file.filename,parseInt(user.id));
+        const savedUser = await this.userServices.setProfileImage(file,parseInt(user.id));
         
         return {
             message:"profile image is changed",
@@ -126,13 +124,13 @@ export class UserController {
     }
 
 
-    @Delete("images/remove-image")
-        @ApiSecurity("bearer")
-
+    @Delete("/images/remove-image")
+    @ApiSecurity("bearer")
     @UseGuards(AuthGuard)
-    public async removeProfileImage(@currentUserDecorator() user:PayloadType) {
-        const newUser = await this.userServices.removeImage(parseInt(user.id));
-        return newUser
+    public async removeProfileImage(@currentUserDecorator() payload:PayloadType) {
+        const user = await this.userServices.removeProfileImage(payload.id);
+        return user
+        
     }
 
     @Get("/images/:image")

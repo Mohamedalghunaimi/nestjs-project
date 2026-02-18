@@ -16,7 +16,6 @@ export class ProductEntity extends BaseEntity {
 
 
     @Column()
-
     description! : string 
 
 

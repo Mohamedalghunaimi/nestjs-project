@@ -5,8 +5,7 @@ import { ProductModule } from './products/product.module';
 import { UserModule } from './users/user.module';
 import { ReviewModule } from './reviews/review.module';
 import {TypeOrmModule} from "@nestjs/typeorm"
-import { ConfigModule } from '@nestjs/config';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { UploadModule } from './uploads/upload.module';
 import { MailModule } from './mail/mail.module';
@@ -20,7 +19,21 @@ import { AppController } from './app.controller';
         ReviewModule,
         UploadModule, 
         MailModule,
-        TypeOrmModule.forRoot(dataSourceOptions),
+        TypeOrmModule.forRootAsync({
+            inject:[ConfigService],
+            useFactory:(config:ConfigService)=> {
+                return {
+                    type: 'postgres',
+                    host: 'localhost',
+                    database:config.get<string>("DB_NAME")!,
+                    synchronize: true,
+                    port:config.get<number>("PORT")!,
+                    username:config.get<string>("DB_USERNAME")!,
+                    password:config.get<string>("DB_PASSWORD")!,
+                    autoLoadEntities: true,
+                }
+            }
+        }),
         ConfigModule.forRoot({
             isGlobal :true,
             envFilePath: process.env.NODE_ENV!=="production" ? `.env.${process.env.NODE_ENV}`:'.env'

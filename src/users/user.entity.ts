@@ -69,6 +69,11 @@ export class User {
     })
     profileImage!: string
 
+    @Column({
+        nullable: true,
+        default: null
+    })
+    profileImageId!: string ;
 
 }
 

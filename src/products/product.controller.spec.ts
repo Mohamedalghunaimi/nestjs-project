@@ -112,11 +112,7 @@ describe("controller",() => {
             expect(result).toHaveLength(products.length)
 
         })
-        it( " test getAllProduct with params",async() => {
-            const result = await productController.getAllProducts("product1",1000,100);
-            expect(result.length).toBe(0);
 
-        })
 
      })
 

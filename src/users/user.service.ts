@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
@@ -19,6 +21,9 @@ import { MailService } from "../mail/mail.service";
 import { randomBytes } from "crypto";
 import { ConfigService } from "@nestjs/config";
 import { ResetPasswordDto } from "./dto/resetPassword.dto";
+import { CloudinaryService } from "src/cloudinary/cloudinary.service";
+import { removeImageType, uploadResultType } from "src/cloudinary/cloudinaryTypes";
+import { UploadApiResponse } from "cloudinary";
 
 @Injectable()
 export class UserServices {
@@ -29,7 +34,8 @@ export class UserServices {
         private readonly userRepostitory : Repository<User>,
         private readonly jwtService: JwtService,
         private readonly mailService : MailService,
-        private readonly configService:ConfigService
+        private readonly configService:ConfigService,
+        private readonly cloudnaryService: CloudinaryService
     ) {
     }
 
@@ -167,34 +173,46 @@ export class UserServices {
     }
 
     public async setProfileImage(
-        profileImage:string,
+        file:Express.Multer.File,
         userId:number
 
     ) {
 
-        const user = await this.getCurrentUser(userId.toString())
-        if(user.profileImage) {
-            await this.removeImage(userId)
-            user.profileImage =  profileImage  ;
+        let user = await this.getCurrentUser(userId.toString())
+        if(!user.profileImage || !user.profileImageId)  {
+            user = await this.saveProfileImage(user,file,"users");
+
+
         } else {
-            user.profileImage =  profileImage  ;
+
+            await this.cloudnaryService.removeImage(user.profileImageId);
+            user = await this.saveProfileImage(user,file,"users")
         }
+        
         const savedUser = await this.userRepostitory.save(user);
         return savedUser ;
     }
 
-    public async removeImage(userId:number) {
-        const user = await this.getCurrentUser(userId.toString());
-        if(!user.profileImage) {
-            throw new BadRequestException('image is already removed')
+    public async removeProfileImage(userId:string) {
+        const user = await this.getCurrentUser(userId);
+        if(!user.profileImageId || !user.profileImage) {
+            throw new BadRequestException('profileimage is already not exist');
         }
-        const imagePath = join(process.cwd(),`../../images/user/${user.profileImage}`);
-        unlinkSync(imagePath)
-        user.profileImage = "";
-        return await this.userRepostitory.save(user) 
+        const {result}:removeImageType = await this.cloudnaryService.removeImage(user.profileImageId);
+        if(result !=="ok") {
+            throw new BadRequestException('publicId is not valid');
+        }
+        
+        (user.profileImageId as any) = null ;
+        (user.profileImage as any) = null ;
+
+        const savedUser = await this.userRepostitory.save(user);
+        return savedUser ;
+
 
 
     }
+
 
     public async verifyEmail(userId:string,verifyToken:string) {
         const user = await this.getCurrentUser(userId);
@@ -293,6 +311,19 @@ export class UserServices {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt);
         return hashedPassword
+    }
+
+    private async saveProfileImage(user:User,file:Express.Multer.File,folderName:string) {
+        try {
+        const result = await this.cloudnaryService.uploadImage(file,folderName);
+        user.profileImage = result.secure_url;
+        user.profileImageId = result.public_id;
+        return user
+        } catch (error) {
+            console.error(error);
+            return user
+        }
+
     }
     
 

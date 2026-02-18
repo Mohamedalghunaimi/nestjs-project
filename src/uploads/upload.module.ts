@@ -10,14 +10,12 @@ import { extname } from "path";
     controllers:[UploadController],
     imports:[
     MulterModule.register(
-{
+    {
         storage:diskStorage({
-            destination:"../../images/user",
             filename:(req, file, cb) => {
                 const uniqueName =
                 Date.now() + '-' + Math.round(Math.random() * 1e9);
                 cb(null, uniqueName + extname(file.originalname));
-
             }
         }),
         fileFilter:(req, file, cb)=> {
@@ -25,8 +23,6 @@ import { extname } from "path";
                 cb(new BadRequestException('invalid file'), false);
             }
             cb(null,true)
-            
-
         },
         limits:{
             fileSize:1024*1024*2

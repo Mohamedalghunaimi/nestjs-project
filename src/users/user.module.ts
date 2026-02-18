@@ -14,16 +14,17 @@ import { extname } from 'path';
 import { MailModule } from '../mail/mail.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 
 @Module({
     controllers: [UserController],
     imports : [
     MailModule,
     TypeOrmModule.forFeature([User]),
+    CloudinaryModule,
     MulterModule.register(
-{
+        {
         storage:diskStorage({
-            destination:"../../images",
             filename:(req, file, cb) => {
                 const uniqueName =
                 Date.now() + '-' + Math.round(Math.random() * 1e9);
